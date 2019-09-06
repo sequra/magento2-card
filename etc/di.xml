@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2017 SeQura Engineering. All rights reserved.
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Payment Method Facade configuration -->
+    <virtualType name="SequraCardGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">\Sequra\Card\Model\Ui\ConfigProvider::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <!--<argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Transparent\Form</argument>-->
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\ConfigurableInfo</argument>
+            <argument name="valueHandlerPool" xsi:type="object">SequraCardGatewayValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">SequraCardValidatorPool</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Configuration reader -->
+    <virtualType name="SequraCardGatewayConfig" type="Sequra\Card\Model\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">\Sequra\Card\Model\Ui\ConfigProvider::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Sequra\Card\Model\Ui\ConfigProvider">
+       <arguments>
+           <argument name="config" xsi:type="object">SequraCardGatewayConfig</argument>
+       </arguments>
+    </type>
+
+    <!-- Value handlers infrastructure -->
+    <virtualType name="SequraCardGatewayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">SequraCardGatewayConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="SequraCardGatewayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">SequraCardGatewayConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Validators -->
+    <virtualType name="SequraCardValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="country" xsi:type="string">SequraCardCountryValidator</item>
+                <!-- Core validator -->
+                <item name="currency" xsi:type="string">SequraGatewayCurrencyValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="SequraCardCountryValidator" type="Magento\Payment\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">SequraCardGatewayConfig</argument>
+        </arguments>
+    </virtualType>
+    
+    <preference for="Sequra\Card\Api\CardQueryInterface" type="Sequra\Card\Model\Service\CardQuery"/>
+</config>
