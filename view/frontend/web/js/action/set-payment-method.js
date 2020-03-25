@@ -16,9 +16,9 @@ define(
 
         return function (messageContainer) {
             var serviceUrl,
-                ShowSequraForm = function (product_code) {
+                placeOrder = function (product_code) {
                     if (typeof window.SequraFormInstance === 'undefined') {
-                        setTimeout(ShowSequraForm, 100);
+                        setTimeout(placeOrder, 100);
                         return;
                     }
                     window.SequraFormInstance.setCloseCallback(function () {
@@ -37,7 +37,7 @@ define(
                             $('[id^="sq-identification"]').remove();
                             $('body').append(response);
                             var product_code = window.checkoutConfig.payment[quote.paymentMethod().method].product
-                            ShowSequraForm(product_code);
+                            placeOrder(product_code);
                         }
                     ).fail(
                         function (response) {
