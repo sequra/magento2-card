@@ -70,7 +70,7 @@ class CardQuery implements CardQueryInterface
             $this->getClient()->getOrderUri()
         );
         if (!$this->getClient()->succeeded()) {
-            http_response_code($client->getStatus());
+            http_response_code($this->getClient()->getStatus());
             die();
         }
     }
