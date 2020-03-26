@@ -4,7 +4,7 @@
 /*browser:true*/
 /*global define*/
 define(
-    [   
+    [
         'ko',
         'Magento_Checkout/js/view/payment/default',
         'Sequra_Card/js/action/set-payment-method',
@@ -36,7 +36,7 @@ define(
                         'card_last_four',
                         'card_expiry_month_year'
                     ]);
-                //Start credit car info query    
+                //Start credit card info query
                 storage.get(
                     urlBuilder.createUrl('/sequra_card/StartCardQuery', {})
                 ).done(
@@ -44,7 +44,7 @@ define(
                         this.parseResponseOrRetry()
                     }.bind(this)
                 );
-
+                Sequra.onLoad(function(){Sequra.refreshComponents();});
                 return this;
             },
 
@@ -86,12 +86,12 @@ define(
             },
 
             populateCardDetails: function(card){
-                if(card.icon){                    
+                if(card.icon){
                     this.card(true);
                     this.card_icon(card.icon);
                     this.card_brand(card.brand);
                     this.card_last_four(card.last_four);
-                    this.card_expiry_month_year(card.expiry_month_year);                
+                    this.card_expiry_month_year(card.expiry_month_year);
                 } else {
                     this.card(false);
                 }
