@@ -7,7 +7,7 @@ define(
     [
         'ko',
         'Magento_Checkout/js/view/payment/default',
-        'Sequra_Card/js/action/set-payment-method',
+        'Sequra_Core/js/action/set-payment-method',
         'Magento_Checkout/js/model/payment/additional-validators',
         'Magento_Checkout/js/model/quote',
         'Magento_Checkout/js/model/url-builder',

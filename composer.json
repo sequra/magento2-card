@@ -17,8 +17,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "sequra/php-client": "~0.1",
-        "sequra/magento2-core": "~2.3"
+        "sequra/magento2-core": "^2.4.0"
     },
     "autoload": {
         "files": [
