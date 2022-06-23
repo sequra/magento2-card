@@ -6,6 +6,7 @@
 namespace Sequra\Card\Model\Service;
 
 use Sequra\Card\Api\CardQueryInterface;
+use Sequra\Core\Model\Adminhtml\Source\Endpoint;
 
 /**
  * Class CardQuery
@@ -95,7 +96,8 @@ class CardQuery implements CardQueryInterface
             $this->client = new \Sequra\PhpClient\Client(
                 $this->getConfigData('user_name'),
                 $this->getConfigData('user_secret'),
-                $this->getConfigData('endpoint')
+                $this->getConfigData('endpoint'),
+                $this->getConfigData('endpoint') != Endpoint::LIVE
             );
         }
         return $this->client;
